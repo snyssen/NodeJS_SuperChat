@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>SuperChat 3000 !</title>
+	<link rel="stylesheet" type="text/css" href="/style.css" />
+</head>
+<body>
+	<div id="history"></div>
+	<form id="chat">
+		<input type="text" id="msg_text" name="msg_text" placeholder="Got anything to say ?"/>
+		<input type="submit" value="Send!" />
+	</form>
+
+	<!-- Inclure les scripts à la fin de la page plutôt que dans le <head> permet de donner l'illusion au client que la page charge plus rapidement -->
+	<!-- On intègre JQuery -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<!-- On appelle socket.io -->
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<!-- Script général -->
+	<script type="text/javascript">
+		var socket = io.connect(); // Connexion au socket
+		var login = prompt("Comment vous appelez-vous ?"); // On récupère le pseudo de l'utilisateur
+		socket.emit('login', login); // et on l'envoie au serveur
+
+		// Méthode d'envoie d'un message au serveur
+		$("form#chat").submit(function (e) {
+			e.preventDefault(); // Empêche le <form> d'exécuter son action
+
+			socket.emit('send message', $(this).find("#msg_text").val(), function () {
+				$("form#chat #msg_text").val(""); // on vide notre input
+			});
+		});
+
+		// Message envoyé par le client local
+		socket.on('local update', function (msg) {
+			$("#history").append(msg);
+		});
+
+		// Message reçu d'un autre utilisateur
+		socket.on('broadcast update', function (msg) {
+			$("#history").append(msg);
+		});
+	</script>
+</body>
+</html>
