@@ -40,6 +40,12 @@
 		socket.on('broadcast update', function (msg) {
 			$("#history").append(msg);
 		});
+
+		// Un nouvel utilisateur s'est connecté
+		socket.on('new connection', function (usr) {
+			usr = "<p class=\"new_conn\"> Taisez-vous, <b>" + usr + "</b> est là !</p>";
+			$("#history").append(usr);
+		});
 	</script>
 </body>
 </html>

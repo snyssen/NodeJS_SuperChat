@@ -36,3 +36,7 @@ form {
 	border: 2px solid #eb5424;
 	height: 550px;
 }
+
+.new_conn {
+	font-style: italic;
+}

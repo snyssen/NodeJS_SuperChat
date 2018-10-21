@@ -63,7 +63,9 @@ io.sockets.on('connection', function (socket) {
 	console.log('nouvelle connexion au socket !');
 	//Connexion d'un utilisateur
 	socket.on("login", function (userdata) {
+		userdata = ent.encode(userdata);
 		socket.handshake.session.userdata = userdata;
+		socket.broadcast.emit('new connection', userdata);
 		socket.handshake.session.save();
 	});
 	// Non utilisé, mais permet de déconnecter un utilisateur
