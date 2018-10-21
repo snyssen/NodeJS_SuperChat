@@ -1,0 +1,9 @@
+{
+  "name": "node-js_super-chat",
+  "version": "0.0.0",
+  "description": "NodeJS_SuperChat",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  }
+}
